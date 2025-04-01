@@ -1,0 +1,109 @@
+"use client";
+
+import React from "react";
+import { motion } from "framer-motion";
+import Button from "../ui/Button";
+import Image from "next/image";
+
+const image = require('@/assets/images/hero.jpg');
+
+const Hero = () => {
+  return (
+    <section
+      id="home"
+      className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex items-center justify-center text-white relative overflow-hidden"
+    >
+      {/* Background Pattern */}
+      <div className="absolute inset-0 z-0 opacity-30">
+        <div className="absolute -bottom-16 -left-16 w-80 h-80 bg-green-500 rounded-full filter blur-3xl opacity-70"></div>
+        <div className="absolute top-32 -right-16 w-80 h-80 bg-green-500 rounded-full filter blur-3xl opacity-50"></div>
+      </div>
+
+      <div className="container mx-auto px-4 z-10 py-24 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="flex flex-col lg:flex-row items-center justify-between gap-12"
+        >
+          {/* Hero Content */}
+          <div className="lg:w-1/2 text-center lg:text-left">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
+            >
+              Advanced Fertilizer <br />
+              <span className="text-green-500">Machinery Solutions</span>
+            </motion.h1>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0"
+            >
+              Providing high-efficiency machinery for fertilizer production. Increase your productivity with our state-of-the-art technology.
+            </motion.p>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+            >
+              <Button
+                size="lg"
+                onClick={() => {
+                  const productsSection = document.getElementById("products");
+                  if (productsSection) {
+                    productsSection.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+              >
+                Explore Products
+              </Button>
+              
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => {
+                  const contactSection = document.getElementById("contact");
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+              >
+                Contact Us
+              </Button>
+            </motion.div>
+          </div>
+          
+          {/* Hero Image */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="lg:w-1/2"
+          >
+            <div className="bg-white p-1 rounded-xl shadow-2xl max-w-md mx-auto">
+              <div className="aspect-video rounded-lg overflow-hidden relative">
+                <Image 
+                  src={image} 
+                  alt="Advanced Fertilizer Machine" 
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className="rounded-lg"
+                  priority
+                />
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero; 

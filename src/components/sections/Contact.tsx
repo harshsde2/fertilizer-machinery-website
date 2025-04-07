@@ -4,6 +4,11 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Button from "../ui/Button";
+import Map from "../ui/Map";
+import { submitContactForm } from "@/lib/api";
+import { validateContactForm } from "@/lib/validation";
+import { FaWhatsapp } from 'react-icons/fa';
+import { CONTACT_INFO } from "@/lib/config";
 
 const Contact = () => {
   const [ref, inView] = useInView({
@@ -19,6 +24,9 @@ const Contact = () => {
     message: "",
   });
 
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [formStatus, setFormStatus] = useState({
     submitted: false,
     success: false,
@@ -33,27 +41,111 @@ const Contact = () => {
       ...prev,
       [name]: value,
     }));
+
+    // Clear error for this field when user starts typing
+    if (formErrors[name]) {
+      setFormErrors(prev => {
+        const updated = { ...prev };
+        delete updated[name];
+        return updated;
+      });
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now we'll just simulate a successful form submission
-    // In a real app, we would send the data to a server
     
-    setFormStatus({
-      submitted: true,
-      success: true,
-      message: "Thank you for your message! We'll get back to you soon.",
-    });
+    // Validate form
+    const validation = validateContactForm(formData);
+    if (!validation.valid) {
+      setFormErrors(validation.errors);
+      return;
+    }
     
-    // Reset form after successful submission
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      message: "",
-    });
+    // Clear errors
+    setFormErrors({});
+    
+    // Set submitting state
+    setIsSubmitting(true);
+    
+    try {
+      // Submit form to API
+      const response = await submitContactForm(formData);
+      
+      if (response.success) {
+        // Form submitted successfully
+        setFormStatus({
+          submitted: true,
+          success: true,
+          message: response.message,
+        });
+        
+        // Send to WhatsApp after successful submission if user opts in
+        const sendToWhatsApp = window.confirm(
+          "Would you like to also send this message via WhatsApp for faster response?"
+        );
+        
+        if (sendToWhatsApp) {
+          sendFormDataToWhatsApp(formData);
+        }
+        
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          message: "",
+        });
+      } else {
+        // API returned an error
+        setFormStatus({
+          submitted: true,
+          success: false,
+          message: response.error,
+        });
+      }
+    } catch (error) {
+      // Handle submission error
+      setFormStatus({
+        submitted: true,
+        success: false,
+        message: "Failed to submit the form. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Update the handleWhatsAppContact function
+  const handleWhatsAppContact = () => {
+    // Default message template
+    const message = encodeURIComponent(
+      "Hello, I'd like to inquire about your fertilizer machinery products."
+    );
+    // Get number from environment variable or use fallback
+    const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || CONTACT_INFO.whatsapp;
+    // Open WhatsApp with prefilled message
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+  };
+
+  // Update the sendFormDataToWhatsApp function
+  const sendFormDataToWhatsApp = (data: typeof formData) => {
+    // Create a formatted message with all form data
+    const message = encodeURIComponent(
+      `*New Form Submission*\n\n` +
+      `*Name:* ${data.name}\n` +
+      `*Email:* ${data.email}\n` +
+      `*Phone:* ${data.phone || 'Not provided'}\n` +
+      `*Company:* ${data.company || 'Not provided'}\n\n` +
+      `*Message:*\n${data.message}`
+    );
+    
+    // Get number from environment variable or use fallback
+    const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || CONTACT_INFO.whatsapp;
+    
+    // Open WhatsApp with the form data
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
   const containerVariants = {
@@ -146,7 +238,7 @@ const Contact = () => {
                     </svg>
                     <div>
                       <p className="font-medium">Address</p>
-                      <p className="text-green-200">123 Industrial Zone, Fertilizer City, FC 12345</p>
+                      <p className="text-green-200">{CONTACT_INFO.address.full}</p>
                     </div>
                   </div>
                   
@@ -166,7 +258,7 @@ const Contact = () => {
                     </svg>
                     <div>
                       <p className="font-medium">Phone</p>
-                      <p className="text-green-200">+1 (234) 567-890</p>
+                      <p className="text-green-200">{CONTACT_INFO.phone}</p>
                     </div>
                   </div>
                   
@@ -186,9 +278,24 @@ const Contact = () => {
                     </svg>
                     <div>
                       <p className="font-medium">Email</p>
-                      <p className="text-green-200">info@fertilmachines.com</p>
+                      <p className="text-green-200">{CONTACT_INFO.email}</p>
                     </div>
                   </div>
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="mt-8 mb-8">
+                  <h4 className="font-medium mb-4">Quick Connect</h4>
+                  <button
+                    onClick={handleWhatsAppContact}
+                    className="flex items-center justify-center space-x-2 bg-green-500 hover:bg-green-400 text-white py-3 px-4 rounded-lg transition-colors w-full"
+                    aria-label="Contact via WhatsApp"
+                  >
+                    <FaWhatsapp className="text-xl" />
+                    <span>Chat on WhatsApp</span>
+                  </button>
+                  <p className="text-green-200 text-sm mt-2 text-center">
+                    Available during business hours
+                  </p>
                 </motion.div>
                 
                 <motion.div variants={itemVariants} className="mt-12">
@@ -221,9 +328,61 @@ const Contact = () => {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-green-100 text-green-700 p-4 rounded-lg mb-6"
+                    className="bg-green-100 text-green-700 p-6 rounded-lg"
                   >
-                    <p className="font-medium">{formStatus.message}</p>
+                    <svg
+                      className="w-10 h-10 mx-auto mb-4 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <h3 className="text-xl font-bold text-center mb-2">Message Sent!</h3>
+                    <p className="text-center">{formStatus.message}</p>
+                    <div className="mt-6 text-center">
+                      <button
+                        onClick={() => setFormStatus({ submitted: false, success: false, message: "" })}
+                        className="text-green-600 hover:text-green-800 font-medium"
+                      >
+                        Send another message
+                      </button>
+                    </div>
+                  </motion.div>
+                ) : formStatus.submitted && !formStatus.success ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-red-100 text-red-700 p-6 rounded-lg"
+                  >
+                    <svg
+                      className="w-10 h-10 mx-auto mb-4 text-red-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <h3 className="text-xl font-bold text-center mb-2">Error</h3>
+                    <p className="text-center">{formStatus.message}</p>
+                    <div className="mt-6 text-center">
+                      <button
+                        onClick={() => setFormStatus({ submitted: false, success: false, message: "" })}
+                        className="text-red-600 hover:text-red-800 font-medium"
+                      >
+                        Try again
+                      </button>
+                    </div>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit}>
@@ -238,9 +397,13 @@ const Contact = () => {
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
-                          required
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                          className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                            formErrors.name ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                          }`}
                         />
+                        {formErrors.name && (
+                          <p className="mt-1 text-sm text-red-600">{formErrors.name}</p>
+                        )}
                       </motion.div>
                       
                       <motion.div variants={itemVariants}>
@@ -253,9 +416,13 @@ const Contact = () => {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
-                          required
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                          className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                            formErrors.email ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                          }`}
                         />
+                        {formErrors.email && (
+                          <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
+                        )}
                       </motion.div>
                       
                       <motion.div variants={itemVariants}>
@@ -268,8 +435,13 @@ const Contact = () => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                          className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                            formErrors.phone ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                          }`}
                         />
+                        {formErrors.phone && (
+                          <p className="mt-1 text-sm text-red-600">{formErrors.phone}</p>
+                        )}
                       </motion.div>
                       
                       <motion.div variants={itemVariants}>
@@ -296,10 +468,14 @@ const Contact = () => {
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
-                        required
                         rows={4}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                          formErrors.message ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                        }`}
                       ></textarea>
+                      {formErrors.message && (
+                        <p className="mt-1 text-sm text-red-600">{formErrors.message}</p>
+                      )}
                     </motion.div>
                     
                     <motion.div variants={itemVariants}>
@@ -307,9 +483,39 @@ const Contact = () => {
                         type="submit"
                         className="w-full"
                         size="lg"
+                        disabled={isSubmitting}
                       >
-                        Send Message
+                        {isSubmitting ? 'Sending...' : 'Send Message'}
                       </Button>
+                    </motion.div>
+
+                    <motion.div variants={itemVariants} className="mt-4">
+                      <div className="flex items-center justify-center">
+                        <span className="border-t border-gray-300 flex-grow mr-3"></span>
+                        <span className="text-gray-500 text-sm">OR</span>
+                        <span className="border-t border-gray-300 flex-grow ml-3"></span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          // Validate form before sending to WhatsApp
+                          const validation = validateContactForm(formData);
+                          if (!validation.valid) {
+                            setFormErrors(validation.errors);
+                            return;
+                          }
+                          // If valid, send to WhatsApp
+                          sendFormDataToWhatsApp(formData);
+                        }}
+                        className="w-full mt-4 flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg transition-colors"
+                        aria-label="Send via WhatsApp"
+                      >
+                        <FaWhatsapp className="text-xl" />
+                        <span>Send via WhatsApp Instead</span>
+                      </button>
+                      <p className="text-sm text-center text-gray-500 mt-2">
+                        For faster response, send your message directly via WhatsApp
+                      </p>
                     </motion.div>
                   </form>
                 )}
@@ -317,6 +523,23 @@ const Contact = () => {
             </div>
           </div>
         </div>
+
+        {/* Map Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="max-w-4xl mx-auto mt-12"
+        >
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <h3 className="text-xl font-bold p-6 border-b border-gray-100">Our Location</h3>
+            <Map 
+              address={CONTACT_INFO.address.full}
+              height="400px" 
+              zoom={14}
+            />
+          </div>
+        </motion.div>
       </div>
     </section>
   );

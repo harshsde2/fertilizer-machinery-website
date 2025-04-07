@@ -4,36 +4,52 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Button from "../ui/Button";
+import Image from "next/image";
+import { COMPANY_NAME } from "@/lib/config";
 
-// Sample products - we'll replace with real data later
+// Import images from assets
+import rotaryDrumImage from '@/assets/images/Fertilizer-Drum-Granulator.jpg';
+import npkBlendingImage from '@/assets/images/Bulk-Blending-Fertilizer-Mixer-Machine.jpg';
+import coatingMachineImage from '@/assets/images/coating-machine.png';
+import crusherImage from '@/assets/images/Fertilizer-Chain-Crusher.jpg';
+
+// Sample products data
 const products = [
   {
     id: 1,
     name: "Rotary Drum Granulator",
+    model: "RDG-1000",
+    status: "Best Seller",
     description: "High-efficiency granulation for compound fertilizer production",
     features: ["Capacity: 5-10 tons/hour", "Low energy consumption", "Uniform granules"],
-    image: "/placeholder.jpg", // We'll replace with actual images later
+    image: rotaryDrumImage,
   },
   {
     id: 2,
     name: "NPK Blending System",
+    model: "NPK-500",
+    status: "New Model",
     description: "Precise blending technology for customized fertilizer formulations",
     features: ["Multiple formula storage", "High precision weighing", "Automated control"],
-    image: "/placeholder.jpg",
+    image: npkBlendingImage,
   },
   {
     id: 3,
     name: "Coating Machine",
+    model: "CM-2000",
+    status: "Featured",
     description: "Advanced coating solution for controlled-release fertilizers",
     features: ["Even coating distribution", "Temperature control", "Anti-caking treatment"],
-    image: "/placeholder.jpg",
+    image: coatingMachineImage,
   },
   {
     id: 4,
     name: "Fertilizer Crusher",
+    model: "FC-750",
+    status: "Popular",
     description: "Powerful crushing equipment for raw material preparation",
     features: ["Adjustable granule size", "High throughput", "Low maintenance"],
-    image: "/placeholder.jpg",
+    image: crusherImage,
   },
 ];
 
@@ -74,11 +90,17 @@ const Products = () => {
           variants={containerVariants}
           className="max-w-4xl mx-auto text-center mb-16"
         >
+          <motion.span
+            variants={itemVariants}
+            className="text-green-600 font-semibold inline-block mb-2"
+          >
+            ADVANCED EQUIPMENT
+          </motion.span>
           <motion.h2
             variants={itemVariants}
             className="text-3xl md:text-4xl font-bold mb-4 text-gray-900"
           >
-            Our <span className="text-green-600">Products</span>
+            {COMPANY_NAME} <span className="text-green-600">Products</span>
           </motion.h2>
           <motion.div
             variants={itemVariants}
@@ -98,29 +120,43 @@ const Products = () => {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto"
         >
           {products.map((product) => (
             <motion.div
               key={product.id}
               variants={itemVariants}
-              className="bg-white rounded-lg overflow-hidden shadow-md border border-gray-200"
+              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
             >
-              <div className="relative bg-gray-200 aspect-video">
-                <div className="absolute inset-0 flex items-center justify-center text-gray-500 font-medium">
-                  {product.name} Image
+              <div className="relative aspect-[16/9] bg-gray-50 overflow-hidden">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className="hover:scale-105 transition-transform duration-500"
+                  priority={product.id <= 2}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                <div className="absolute bottom-2 left-4 bg-green-600 text-white text-xs px-2 py-1 rounded-full">
+                  {product.status}
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-gray-900">
-                  {product.name}
-                </h3>
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    {product.name}
+                  </h3>
+                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                    Model: {product.model}
+                  </span>
+                </div>
                 <p className="text-gray-600 mb-4">{product.description}</p>
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-3 mb-6">
                   {product.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
                       <svg
-                        className="w-4 h-4 mr-2 text-green-500"
+                        className="w-5 h-5 mr-3 text-green-500 flex-shrink-0"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -134,7 +170,66 @@ const Products = () => {
                     </li>
                   ))}
                 </ul>
-                <Button>View Details</Button>
+                <div className="flex flex-col space-y-4">
+                  <Button
+                    variant="outline"
+                    fullWidth
+                    onClick={() => {}}
+                  >
+                    <span className="flex items-center justify-center">
+                      <svg
+                        className="w-5 h-5 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                      </svg>
+                      View Details
+                    </span>
+                  </Button>
+                  
+                  <Button
+                    variant="primary"
+                    fullWidth
+                    onClick={() => {
+                      const contactSection = document.getElementById("contact");
+                      if (contactSection) {
+                        contactSection.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                  >
+                    <span className="flex items-center justify-center">
+                      <svg
+                        className="w-5 h-5 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                        />
+                      </svg>
+                      Request Quote
+                    </span>
+                  </Button>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -142,7 +237,7 @@ const Products = () => {
 
         <motion.div
           variants={itemVariants}
-          className="text-center mt-12"
+          className="text-center mt-16"
         >
           <Button 
             variant="outline" 
@@ -154,7 +249,7 @@ const Products = () => {
               }
             }}
           >
-            Request Product Catalog
+            Download Complete Product Catalog
           </Button>
         </motion.div>
       </div>

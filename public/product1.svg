@@ -1,0 +1,8 @@
+<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#f3f4f6"/>
+  <circle cx="400" cy="200" r="120" fill="#e5e7eb" stroke="#059669" stroke-width="8"/>
+  <rect x="280" y="280" width="240" height="40" rx="8" fill="#e5e7eb" stroke="#059669" stroke-width="8"/>
+  <rect x="330" y="320" width="140" height="30" rx="5" fill="#e5e7eb" stroke="#059669" stroke-width="5"/>
+  <path d="M400 90L420 130H380L400 90Z" fill="#059669"/>
+  <text x="400" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#4b5563">Rotary Drum Granulator</text>
+</svg> 

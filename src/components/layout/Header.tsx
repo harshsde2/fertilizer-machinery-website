@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
+import { COMPANY_NAME } from "@/lib/config";
 
 // Navigation items
 const navItems = [
@@ -62,10 +62,10 @@ const Header = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <div className="relative h-10 w-40">
+          <div className="relative h-10 w-100 top-2">
             {/* Replace with your logo */}
             <div className="font-bold text-xl text-green-600">
-              FertilMachines
+              {COMPANY_NAME}
             </div>
           </div>
         </Link>

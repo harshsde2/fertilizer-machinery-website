@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { COMPANY_NAME, COMPANY_FOUNDED_YEAR } from "@/lib/config";
 
 // Features of the company
 const features = [
@@ -129,7 +130,7 @@ const About = () => {
             variants={itemVariants}
             className="text-3xl md:text-4xl font-bold mb-4 text-gray-900"
           >
-            About <span className="text-green-600">FertilMachines</span>
+            About <span className="text-green-600">{COMPANY_NAME}</span>
           </motion.h2>
           <motion.div
             variants={itemVariants}
@@ -139,7 +140,7 @@ const About = () => {
             variants={itemVariants}
             className="text-lg text-gray-600 mb-8"
           >
-            Founded in 2005, FertilMachines has been at the forefront of
+            Founded in {COMPANY_FOUNDED_YEAR}, {COMPANY_NAME} has been at the forefront of
             fertilizer machinery innovation. We design, manufacture, and supply
             high-quality machinery that optimizes fertilizer production processes,
             increasing efficiency and reducing costs for our clients worldwide.

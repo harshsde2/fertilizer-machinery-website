@@ -1,0 +1,9 @@
+<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#f3f4f6"/>
+  <circle cx="400" cy="200" r="100" fill="#e5e7eb" stroke="#059669" stroke-width="8"/>
+  <circle cx="400" cy="200" r="70" fill="#e5e7eb" stroke="#059669" stroke-width="4"/>
+  <path d="M400 100 Q450 200 400 300" stroke="#059669" stroke-width="4" fill="none"/>
+  <path d="M400 100 Q350 200 400 300" stroke="#059669" stroke-width="4" fill="none"/>
+  <circle cx="400" cy="200" r="20" fill="#059669"/>
+  <text x="400" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#4b5563">Coating Machine</text>
+</svg> 

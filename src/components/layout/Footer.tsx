@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { COMPANY_NAME, CONTACT_INFO, SOCIAL_MEDIA } from "@/lib/config";
 
 // Footer navigation items
 const footerNavItems = [
@@ -114,7 +114,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">FertilMachines</h3>
+            <h3 className="text-xl font-bold mb-4">{COMPANY_NAME}</h3>
             <p className="mb-4 text-gray-400">
               Providing high-quality fertilizer machinery solutions since 2005.
               Our machinery is designed to maximize efficiency and productivity.
@@ -155,22 +155,22 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">Contact Us</h3>
             <address className="not-italic text-gray-400">
-              <p className="mb-2">123 Industrial Zone,</p>
-              <p className="mb-2">Fertilizer City, FC 12345</p>
+              <p className="mb-2">{CONTACT_INFO.address.street},</p>
+              <p className="mb-2">{CONTACT_INFO.address.city}, {CONTACT_INFO.address.state} {CONTACT_INFO.address.zip}</p>
               <p className="mb-2">
                 <a 
-                  href="tel:+1234567890" 
+                  href={`tel:${CONTACT_INFO.phone}`} 
                   className="hover:text-white transition-colors"
                 >
-                  +1 (234) 567-890
+                  {CONTACT_INFO.phone}
                 </a>
               </p>
               <p>
                 <a 
-                  href="mailto:info@fertilmachines.com" 
+                  href={`mailto:${CONTACT_INFO.email}`} 
                   className="hover:text-white transition-colors"
                 >
-                  info@fertilmachines.com
+                  {CONTACT_INFO.email}
                 </a>
               </p>
             </address>
@@ -180,7 +180,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} FertilMachines. All rights reserved.
+            &copy; {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0 flex space-x-4 text-sm text-gray-400">
             <a href="#" className="hover:text-white transition-colors">

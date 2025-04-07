@@ -4,17 +4,29 @@ import React from "react";
 import { motion } from "framer-motion";
 import Button from "../ui/Button";
 import Image from "next/image";
-
-const image = require('@/assets/images/hero.jpg');
+import heroImage from '@/assets/images/rotating-drum-fertilizer-pelletizer.jpg';
+import backgroundImage from '@/assets/images/main_7.jpg';
 
 const Hero = () => {
   return (
     <section
       id="home"
-      className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex items-center justify-center text-white relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center text-white relative overflow-hidden"
     >
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={backgroundImage}
+          alt="Background"
+          fill
+          style={{ objectFit: 'cover' }}
+          className="brightness-50"
+          priority
+        />
+      </div>
+
       {/* Background Pattern */}
-      <div className="absolute inset-0 z-0 opacity-30">
+      <div className="absolute inset-0 z-1 opacity-30">
         <div className="absolute -bottom-16 -left-16 w-80 h-80 bg-green-500 rounded-full filter blur-3xl opacity-70"></div>
         <div className="absolute top-32 -right-16 w-80 h-80 bg-green-500 rounded-full filter blur-3xl opacity-50"></div>
       </div>
@@ -90,13 +102,21 @@ const Hero = () => {
             <div className="bg-white p-1 rounded-xl shadow-2xl max-w-md mx-auto">
               <div className="aspect-video rounded-lg overflow-hidden relative">
                 <Image 
-                  src={image} 
+                  src={heroImage} 
                   alt="Advanced Fertilizer Machine" 
                   fill
                   style={{ objectFit: 'cover' }}
                   className="rounded-lg"
                   priority
                 />
+                {/* Image Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-green-800/60 to-transparent rounded-lg z-10"></div>
+                
+                {/* Information Badge */}
+                <div className="absolute bottom-4 left-4 z-20 text-white">
+                  {/* <div className="bg-green-600/80 px-3 py-1 rounded-full text-xs font-semibold mb-1">Top Seller</div> */}
+                  <h3 className="text-sm font-bold drop-shadow-md">Rotating Drum Pelletizer</h3>
+                </div>
               </div>
             </div>
           </motion.div>

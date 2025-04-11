@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import Button from "../ui/Button";
 import Map from "../ui/Map";
 import { submitContactForm } from "@/lib/api";
 import { validateContactForm } from "@/lib/validation";
@@ -99,7 +98,8 @@ const Contact = () => {
           message: response.error,
         });
       }
-    } catch (error) {
+    } catch (err) {
+      console.error("Form submission error:", err);
       // Handle submission error
       setFormStatus({
         submitted: true,
@@ -483,23 +483,7 @@ const Contact = () => {
                       )}
                     </motion.div>
                     
-                    {/* <motion.div variants={itemVariants}>
-                      <Button
-                        type="submit"
-                        className="w-full"
-                        size="lg"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? 'Sending...' : 'Send Message'}
-                      </Button>
-                    </motion.div> */}
-
                     <motion.div variants={itemVariants} className="mt-4">
-                      {/* <div className="flex items-center justify-center">
-                        <span className="border-t border-gray-300 flex-grow mr-3"></span>
-                        <span className="text-gray-500 text-sm">OR</span>
-                        <span className="border-t border-gray-300 flex-grow ml-3"></span>
-                      </div> */}
                       <button
                         type="button"
                         onClick={() => {

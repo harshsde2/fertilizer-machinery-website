@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import Image from "next/image";
 
 // Sample testimonials data
 const testimonials = [
@@ -128,9 +129,11 @@ const Testimonials = () => {
               {/* Client Image */}
               <div className="w-32 h-32 md:w-40 md:h-40 relative flex-shrink-0">
                 <div className="w-full h-full rounded-full bg-gray-100 overflow-hidden">
-                  <img
+                  <Image
                     src={testimonials[currentIndex].image}
-                    alt={testimonials[currentIndex].name}
+                    alt={`${testimonials[currentIndex].name} - ${testimonials[currentIndex].position}`}
+                    width={128}
+                    height={128}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -153,9 +156,9 @@ const Testimonials = () => {
 
               {/* Testimonial Content */}
               <div className="flex-1 text-center md:text-left">
-                <blockquote className="text-xl md:text-2xl text-gray-700 italic mb-6">
-                  "{testimonials[currentIndex].quote}"
-                </blockquote>
+                <p className="text-gray-700 italic mb-2">
+                  &ldquo;{testimonials[currentIndex].quote}&rdquo;
+                </p>
                 <div>
                   <cite className="not-italic">
                     <span className="font-bold text-gray-900 block mb-1">

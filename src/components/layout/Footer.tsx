@@ -1,6 +1,6 @@
 "use client";
 
-import { COMPANY_NAME, CONTACT_INFO, SOCIAL_MEDIA } from "@/lib/config";
+import { COMPANY_NAME, COMPANY_FOUNDED_YEAR, CONTACT_INFO } from "@/lib/config";
 
 // Footer navigation items
 const footerNavItems = [

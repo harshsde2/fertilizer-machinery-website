@@ -70,7 +70,6 @@ const VideoGallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [activeVideo, setActiveVideo] = useState<number | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [carouselWidth, setCarouselWidth] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [dragX, setDragX] = useState(0);
@@ -92,7 +91,7 @@ const VideoGallery = () => {
   useEffect(() => {
     const updateWidth = () => {
       if (carouselRef.current) {
-        setCarouselWidth(carouselRef.current.offsetWidth);
+        // setCarouselWidth(carouselRef.current.offsetWidth);
       }
     };
 

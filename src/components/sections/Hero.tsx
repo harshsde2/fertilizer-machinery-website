@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Button from "../ui/Button";
 import Image from "next/image";
 import heroImage from '@/assets/images/rotating-drum-fertilizer-pelletizer.jpg';
@@ -45,7 +45,7 @@ const Hero = () => {
     }, 4000);
     
     return () => clearInterval(interval);
-  }, [currentImageIndex, nextImageIndex]);
+  }, [currentImageIndex, nextImageIndex, backgroundImages.length]);
 
   return (
     <section

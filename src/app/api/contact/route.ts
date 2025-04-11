@@ -4,10 +4,8 @@ import { connectToDatabase } from '@/lib/db';
 import ContactMessage from '@/models/ContactMessage';
 import { sendEmail, createContactFormEmail, createAutoResponseEmail } from '@/lib/email';
 
-// Simple function to send a WhatsApp message (for reference - this would be client-side)
-const exampleWhatsAppLink = (message: string, phoneNumber: string) => {
-  return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-};
+// Remove or comment out the unused variable
+// const exampleWhatsAppLink = `https://wa.me/${process.env.WHATSAPP_NUMBER}`;
 
 export async function POST(request: Request) {
   try {
@@ -69,7 +67,7 @@ export async function POST(request: Request) {
       }
       
       // Send auto-response to customer
-      const autoResponse = createAutoResponseEmail(body.name, body.email);
+      const autoResponse = createAutoResponseEmail(body.name);
       await sendEmail(autoResponse);
       
       // Return success response

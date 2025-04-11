@@ -67,7 +67,10 @@ export async function POST(request: Request) {
       }
       
       // Send auto-response to customer
-      const autoResponse = createAutoResponseEmail(body.name);
+      const autoResponse = createAutoResponseEmail({
+        name: body.name,
+        email: body.email
+      });
       await sendEmail(autoResponse);
       
       // Return success response

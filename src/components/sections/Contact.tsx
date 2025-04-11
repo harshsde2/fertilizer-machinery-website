@@ -498,9 +498,10 @@ const Contact = () => {
                         }}
                         className="w-full mt-4 flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg transition-colors"
                         aria-label="Send via WhatsApp"
+                        disabled={isSubmitting}
                       >
                         <FaWhatsapp className="text-xl" />
-                        <span>Send via WhatsApp</span>
+                        <span>{isSubmitting ? 'Processing...' : 'Send via WhatsApp'}</span>
                       </button>
                       <p className="text-sm text-center text-gray-500 mt-2">
                         For faster response, send your message directly via WhatsApp

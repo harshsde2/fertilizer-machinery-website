@@ -116,7 +116,7 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">{COMPANY_NAME}</h3>
             <p className="mb-4 text-gray-400">
-              Providing high-quality fertilizer machinery solutions since 2005.
+              Providing high-quality fertilizer machinery solutions since {COMPANY_FOUNDED_YEAR}.
               Our machinery is designed to maximize efficiency and productivity.
             </p>
             <div className="flex space-x-4">

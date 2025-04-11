@@ -3,9 +3,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { COMPANY_NAME, VIDEO_INFO, THEME_COLORS } from "@/lib/config";
+import { COMPANY_NAME, VIDEO_INFO } from "@/lib/config";
 import Image from "next/image";
-import { FaPlay } from "react-icons/fa";
 
 // Import thumbnail images
 import rotaryDrumImage from '@/assets/images/Fertilizer-Drum-Granulator.jpg';

@@ -80,14 +80,8 @@ const Contact = () => {
           message: response.message,
         });
         
-        // Send to WhatsApp after successful submission if user opts in
-        const sendToWhatsApp = window.confirm(
-          "Would you like to also send this message via WhatsApp for faster response?"
-        );
-        
-        if (sendToWhatsApp) {
-          sendFormDataToWhatsApp(formData);
-        }
+        // Directly send to WhatsApp after successful submission
+        sendFormDataToWhatsApp(formData);
         
         // Reset form
         setFormData({
@@ -133,18 +127,18 @@ const Contact = () => {
   const sendFormDataToWhatsApp = (data: typeof formData) => {
     // Create a formatted message with all form data
     const message = encodeURIComponent(
-      `*New Form Submission*\n\n` +
-      `*Name:* ${data.name}\n` +
-      `*Email:* ${data.email}\n` +
-      `*Phone:* ${data.phone || 'Not provided'}\n` +
-      `*Company:* ${data.company || 'Not provided'}\n\n` +
-      `*Message:*\n${data.message}`
+      `Hello, I'm ${data.name}.\n\n` +
+      `*My contact details:*\n` +
+      `Email: ${data.email}\n` +
+      `Phone: ${data.phone || 'Not provided'}\n` +
+      `Company: ${data.company || 'Not provided'}\n\n` +
+      `*Inquiry:*\n${data.message}`
     );
     
-    // Get number from environment variable or use fallback
-    const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || CONTACT_INFO.whatsapp;
+    // Get WhatsApp number from config
+    const phoneNumber = CONTACT_INFO.whatsapp;
     
-    // Open WhatsApp with the form data
+    // Open WhatsApp with the form data in a new tab
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
@@ -196,6 +190,17 @@ const Contact = () => {
             Have a question about our fertilizer machinery or need a customized solution?
             Fill out the form below, and our team will get back to you shortly.
           </motion.p>
+
+          {/* Direct WhatsApp Contact Button */}
+          <motion.div variants={itemVariants} className="mb-8">
+            <button
+              onClick={handleWhatsAppContact}
+              className="inline-flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg transition-colors shadow-md"
+            >
+              <FaWhatsapp className="text-xl" />
+              <span>Contact Us Directly on WhatsApp</span>
+            </button>
+          </motion.div>
         </motion.div>
 
         <div className="max-w-4xl mx-auto">
@@ -478,7 +483,7 @@ const Contact = () => {
                       )}
                     </motion.div>
                     
-                    <motion.div variants={itemVariants}>
+                    {/* <motion.div variants={itemVariants}>
                       <Button
                         type="submit"
                         className="w-full"
@@ -487,14 +492,14 @@ const Contact = () => {
                       >
                         {isSubmitting ? 'Sending...' : 'Send Message'}
                       </Button>
-                    </motion.div>
+                    </motion.div> */}
 
                     <motion.div variants={itemVariants} className="mt-4">
-                      <div className="flex items-center justify-center">
+                      {/* <div className="flex items-center justify-center">
                         <span className="border-t border-gray-300 flex-grow mr-3"></span>
                         <span className="text-gray-500 text-sm">OR</span>
                         <span className="border-t border-gray-300 flex-grow ml-3"></span>
-                      </div>
+                      </div> */}
                       <button
                         type="button"
                         onClick={() => {
@@ -511,7 +516,7 @@ const Contact = () => {
                         aria-label="Send via WhatsApp"
                       >
                         <FaWhatsapp className="text-xl" />
-                        <span>Send via WhatsApp Instead</span>
+                        <span>Send via WhatsApp</span>
                       </button>
                       <p className="text-sm text-center text-gray-500 mt-2">
                         For faster response, send your message directly via WhatsApp

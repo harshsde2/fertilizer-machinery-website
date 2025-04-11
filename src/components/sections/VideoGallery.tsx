@@ -30,7 +30,7 @@ const videos = [
     title: "NPK Blending Process",
     description: "Complete walkthrough of the NPK blending system",
     thumbnail: npkBlendingImage,
-    videoSrc: "/videos/video_2.mp4",
+    videoSrc: "/videos/NPK_plant.mp4",
     category: "product",
     duration: "3:30",
   },

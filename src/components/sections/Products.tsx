@@ -171,7 +171,7 @@ const Products = () => {
                   ))}
                 </ul>
                 <div className="flex flex-col space-y-4">
-                  <Button
+                  {/* <Button
                     variant="outline"
                     fullWidth
                     onClick={() => {}}
@@ -199,7 +199,7 @@ const Products = () => {
                       </svg>
                       View Details
                     </span>
-                  </Button>
+                  </Button> */}
                   
                   <Button
                     variant="primary"

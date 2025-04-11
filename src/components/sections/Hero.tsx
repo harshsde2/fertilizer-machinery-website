@@ -1,37 +1,90 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
 import Image from "next/image";
 import heroImage from '@/assets/images/rotating-drum-fertilizer-pelletizer.jpg';
-import backgroundImage from '@/assets/images/main_7.jpg';
+import backgroundImage from '@/assets/images/main_1.jpg';
+import backgroundImage2 from '@/assets/images/main_2.jpg';
+import backgroundImage3 from '@/assets/images/main_3.jpg';
+import backgroundImage4 from '@/assets/images/main_4.jpg';
+import backgroundImage5 from '@/assets/images/main_5.jpg';
+import backgroundImage6 from '@/assets/images/main_6.jpg';
+import backgroundImage7 from '@/assets/images/main_7.jpg';
 
 const Hero = () => {
+  const backgroundImages = [
+    backgroundImage,
+    backgroundImage2,
+    backgroundImage3,
+    backgroundImage4,
+    backgroundImage5,
+    backgroundImage6,
+    backgroundImage7,
+  ];
+  
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [nextImageIndex, setNextImageIndex] = useState(1);
+  const [fadeIn, setFadeIn] = useState(false);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Set the next image index
+      setNextImageIndex((currentImageIndex + 1) % backgroundImages.length);
+      // Start the fade-in transition
+      setFadeIn(true);
+      
+      // After transition completes, update the current image to be the next one
+      const transitionTimeout = setTimeout(() => {
+        setCurrentImageIndex(nextImageIndex);
+        setFadeIn(false);
+      }, 2000);
+      
+      return () => clearTimeout(transitionTimeout);
+    }, 4000);
+    
+    return () => clearInterval(interval);
+  }, [currentImageIndex, nextImageIndex]);
+
   return (
     <section
       id="home"
       className="min-h-screen flex items-center justify-center text-white relative overflow-hidden"
     >
-      {/* Background Image */}
+      {/* Current Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src={backgroundImage}
-          alt="Background"
+          src={backgroundImages[currentImageIndex]}
+          alt={`Background ${currentImageIndex + 1}`}
           fill
           style={{ objectFit: 'cover' }}
           className="brightness-50"
-          priority
+          priority={currentImageIndex === 0}
+        />
+      </div>
+      
+      {/* Next Background Image with Fade Transition */}
+      <div 
+        className="absolute inset-0 z-1 transition-opacity duration-2000 ease-in-out"
+        style={{ opacity: fadeIn ? 1 : 0 }}
+      >
+        <Image
+          src={backgroundImages[nextImageIndex]}
+          alt={`Background ${nextImageIndex + 1}`}
+          fill
+          style={{ objectFit: 'cover' }}
+          className="brightness-50"
         />
       </div>
 
       {/* Background Pattern */}
-      <div className="absolute inset-0 z-1 opacity-30">
+      <div className="absolute inset-0 z-[2] opacity-30">
         <div className="absolute -bottom-16 -left-16 w-80 h-80 bg-green-500 rounded-full filter blur-3xl opacity-70"></div>
         <div className="absolute top-32 -right-16 w-80 h-80 bg-green-500 rounded-full filter blur-3xl opacity-50"></div>
       </div>
 
-      <div className="container mx-auto px-4 z-10 py-24 relative">
+      <div className="container mx-auto px-4 z-[5] py-24 relative">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -122,6 +175,13 @@ const Hero = () => {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Custom CSS for extended transition duration */}
+      <style jsx global>{`
+        .duration-2000 {
+          transition-duration: 2000ms;
+        }
+      `}</style>
     </section>
   );
 };

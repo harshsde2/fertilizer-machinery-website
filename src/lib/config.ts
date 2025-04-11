@@ -5,22 +5,22 @@
 
 // Company information
 export const COMPANY_NAME = 'Sarthak Enterprise';
-export const COMPANY_FOUNDED_YEAR = 2005;
+export const COMPANY_FOUNDED_YEAR = 2017;
 export const COMPANY_DESCRIPTION = 'Advanced Fertilizer Machinery Solutions';
 export const COMPANY_LEGAL_NAME = 'Sarthak Enterprise';
 
 // Contact information
 export const CONTACT_INFO = {
-  email: 'info@sarthakenterprise.com',
-  phone: '+1 (234) 567-890',
-  whatsapp: '8266815617',
+  email: 'sarthakenterprisesshamli@gmail.com',
+  phone: '+916396528008',
+  whatsapp: '916396528008',
   address: {
-    street: '123 Industrial Zone',
-    city: 'Fertilizer City',
-    state: 'FC',
-    zip: '12345',
+    street: 'Delhi Saharanpur Road, Near Telephone Exchange',
+    city: 'Shamli',
+    state: 'Uttar Pradesh',
+    zip: '247776',
     country: 'India',
-    full: '123 Industrial Zone, Fertilizer City, FC 12345'
+    full: 'Delhi Saharanpur Road, Near Telephone Exchange, Thanabhawan, Shamli, Uttar Pradesh, 247776'
   }
 };
 
@@ -37,9 +37,9 @@ export const SOCIAL_MEDIA = {
 export const SITE_METADATA = {
   title: `${COMPANY_NAME} - ${COMPANY_DESCRIPTION}`,
   description: 'High-efficiency machinery for fertilizer production. Increase your productivity with our state-of-the-art technology.',
-  keywords: 'fertilizer machinery, fertilizer equipment, granulator, NPK blending, coating machine, fertilizer crusher',
+  keywords: 'fertilizer machinery, fertilizer equipment, granulator, NPK blending, coating machine, fertilizer crusher, EWXPK7611E',
   url: 'https://sarthakenterprise.com',
-  locale: 'en_US',
+  locale: 'en_IN',
 };
 
 // Theme colors
@@ -61,4 +61,14 @@ export const VIDEO_INFO = {
     { id: "facility", name: "Facility Tours" },
     { id: "testimonial", name: "Client Stories" },
   ]
+};
+
+// Business details
+export const BUSINESS_DETAILS = {
+  proprietor: 'Jitendra Kumar',
+  gstin: '09EWXPK7611E1Z0',
+  iec: 'EWXPK7611E',
+  pan: 'EWXPK7611E',
+  establishedDate: '27/09/2017',
+  businessType: 'Proprietorship'
 }; 

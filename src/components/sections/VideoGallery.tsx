@@ -16,6 +16,15 @@ import factoryImage from '@/assets/images/main_3.jpg';
 // Sample video data
 const videos = [
   {
+    id: 0,
+    title: "Single superphosphate plant",
+    description: "See our flagship granulator processing fertilizer in real-time",
+    thumbnail: rotaryDrumImage,
+    videoSrc: "/videos/SSP_plant.mp4",
+    category: "product",
+    duration: "2:45",
+  },
+  {
     id: 1,
     title: "Rotary Drum Granulator in Action",
     description: "See our flagship granulator processing fertilizer in real-time",
@@ -348,11 +357,13 @@ const VideoGallery = () => {
                           videoRefs.current[filteredVideos[currentIndex].id] = el;
                         }}
                         src={filteredVideos[currentIndex].videoSrc}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover mobile-video-player"
                         controls
                         onLoadedData={() => setIsVideoLoading(false)}
                         onEnded={() => setActiveVideo(null)}
                         playsInline
+                        controlsList="nodownload"
+                        preload="metadata"
                       />
                       {isVideoLoading && (
                         <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10">
@@ -373,14 +384,14 @@ const VideoGallery = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                       
-                      {/* Play Button */}
+                      {/* Play Button - Increase size and z-index for mobile */}
                       <div 
-                        className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                        className="absolute inset-0 flex items-center justify-center cursor-pointer z-10"
                         onClick={() => handleVideoClick(filteredVideos[currentIndex].id)}
                       >
-                        <div className="w-16 h-16 rounded-full bg-green-600 flex items-center justify-center transform hover:scale-110 transition-all duration-300 shadow-lg">
+                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-green-600 flex items-center justify-center transform hover:scale-110 transition-all duration-300 shadow-lg">
                           <svg
-                            className="w-8 h-8 text-white translate-x-1"
+                            className="w-8 h-8 md:w-10 md:h-10 text-white translate-x-1"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -389,19 +400,19 @@ const VideoGallery = () => {
                         </div>
                       </div>
                       
-                      {/* Video Info Overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                        <div className="bg-green-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-full inline-block mb-4">
+                      {/* Video Info Overlay - Lower z-index to prevent overlap with play button */}
+                      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white z-5">
+                        <div className="bg-green-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-full inline-block mb-2 md:mb-4">
                           {filteredVideos[currentIndex].category}
                         </div>
-                        <h2 className="text-3xl font-bold mb-2 drop-shadow-lg">
+                        <h2 className="text-xl md:text-3xl font-bold mb-1 md:mb-2 drop-shadow-lg">
                           {filteredVideos[currentIndex].title}
                         </h2>
-                        <p className="text-white max-w-2xl mb-2 drop-shadow-md">
+                        <p className="text-white text-sm md:text-base max-w-2xl mb-1 md:mb-2 drop-shadow-md hidden sm:block">
                           {filteredVideos[currentIndex].description}
                         </p>
-                        <div className="flex items-center text-sm text-white">
-                          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <div className="flex items-center text-xs md:text-sm text-white">
+                          <svg className="w-3 h-3 md:w-4 md:h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                           </svg>
                           {filteredVideos[currentIndex].duration}
@@ -515,6 +526,21 @@ const VideoGallery = () => {
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background-color: #d1d5db;
+        }
+        
+        /* Mobile video player improvements */
+        .mobile-video-player::-webkit-media-controls {
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        @media (max-width: 640px) {
+          .mobile-video-player::-webkit-media-controls-panel {
+            padding: 0 5px;
+          }
+          .mobile-video-player::-webkit-media-controls-play-button {
+            transform: scale(1.5);
+            margin: 0 10px;
+          }
         }
       `}</style>
     </section>

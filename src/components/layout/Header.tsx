@@ -62,11 +62,11 @@ const Header = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <div className="relative h-10 w-100 top-2">
-            {/* Replace with your logo */}
-            <div className="font-bold text-xl text-green-600">
+          <div className="relative h-10 w-32 flex items-center">
+            {/* Logo text */}
+            <span className={`font-bold text-xl ${scrolled ? "text-green-600" : "text-white"}`}>
               {COMPANY_NAME}
-            </div>
+            </span>
           </div>
         </Link>
 
@@ -114,37 +114,33 @@ const Header = () => {
             />
           </svg>
         </button>
+      </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 right-0 bg-white shadow-lg md:hidden py-2"
+      {/* Mobile Navigation - Removed motion.div and placed outside the container for better positioning */}
+      <div 
+        className={`absolute top-full left-0 right-0 bg-white shadow-lg md:hidden py-4 z-50 w-full transition-all duration-300 ${
+          isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+        }`}
+      >
+        <div className="container mx-auto px-4 flex flex-col space-y-3 py-2">
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              onClick={(e) => handleScroll(e, item.href)}
+              className="text-gray-800 py-2 px-3 block text-lg font-medium hover:bg-gray-50 hover:text-green-600 transition-colors rounded"
+            >
+              {item.name}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            onClick={(e) => handleScroll(e, "#contact")}
+            className="bg-green-600 text-white px-4 py-3 rounded-md text-center hover:bg-green-700 transition-colors mt-2 font-medium"
           >
-            <div className="container mx-auto px-4 flex flex-col space-y-3">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => handleScroll(e, item.href)}
-                  className="text-gray-800 py-2 block hover:text-green-600 transition-colors"
-                >
-                  {item.name}
-                </a>
-              ))}
-              <a
-                href="#contact"
-                onClick={(e) => handleScroll(e, "#contact")}
-                className="bg-green-600 text-white px-4 py-2 rounded-md text-center hover:bg-green-700 transition-colors"
-              >
-                Get a Quote
-              </a>
-            </div>
-          </motion.div>
-        )}
+            Get a Quote
+          </a>
+        </div>
       </div>
     </header>
   );

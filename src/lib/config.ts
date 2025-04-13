@@ -4,7 +4,7 @@
  */
 
 // Company information
-export const COMPANY_NAME = 'Sarthak Enterprise';
+export const COMPANY_NAME = 'Sarthak Enterprises';
 export const COMPANY_FOUNDED_YEAR = 2017;
 export const COMPANY_DESCRIPTION = 'Advanced Fertilizer Machinery Solutions';
 export const COMPANY_LEGAL_NAME = 'Sarthak Enterprise';

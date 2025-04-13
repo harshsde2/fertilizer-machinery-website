@@ -8,6 +8,7 @@ import Image from "next/image";
 
 // Import thumbnail images
 import rotaryDrumImage from '@/assets/images/Fertilizer-Drum-Granulator.jpg';
+import steelplantfurnishImage from '@/assets/images/steelplantfurnish.jpg';
 import npkBlendingImage from '@/assets/images/Bulk-Blending-Fertilizer-Mixer-Machine.jpg';
 import coatingMachineImage from '@/assets/images/coating-machine.png';
 import crusherImage from '@/assets/images/Fertilizer-Chain-Crusher.jpg';
@@ -17,15 +18,24 @@ import factoryImage from '@/assets/images/main_3.jpg';
 const videos = [
   {
     id: 0,
+    title: "Steel plant furnish",
+    description: "Steel plant furnish of our company",
+    thumbnail: steelplantfurnishImage,
+    videoSrc: "/videos/steel_plant_furnish.mp4",
+    category: "product",
+    duration: "2:45",
+  },
+  {
+    id: 1,
     title: "Single superphosphate plant",
-    description: "See our flagship granulator processing fertilizer in real-time",
+    description: "Single superphosphate plant is one of the most important plant of our company",
     thumbnail: rotaryDrumImage,
     videoSrc: "/videos/SSP_plant.mp4",
     category: "product",
     duration: "2:45",
   },
   {
-    id: 1,
+    id: 2,
     title: "Rotary Drum Granulator in Action",
     description: "See our flagship granulator processing fertilizer in real-time",
     thumbnail: rotaryDrumImage,
@@ -34,7 +44,7 @@ const videos = [
     duration: "2:45",
   },
   {
-    id: 2,
+    id: 3,
     title: "NPK Blending Process",
     description: "Complete walkthrough of the NPK blending system",
     thumbnail: npkBlendingImage,
@@ -43,7 +53,7 @@ const videos = [
     duration: "3:30",
   },
   {
-    id: 3,
+    id: 4,
     title: "Factory Tour 2024",
     description: `Take a virtual tour of our state-of-the-art ${COMPANY_NAME} manufacturing facility`,
     thumbnail: factoryImage,
@@ -52,7 +62,7 @@ const videos = [
     duration: "5:15",
   },
   {
-    id: 4,
+    id: 5,
     title: "Coating Machine Demo",
     description: "Detailed demonstration of our advanced coating technology",
     thumbnail: coatingMachineImage,
@@ -61,7 +71,7 @@ const videos = [
     duration: "4:10",
   },
   {
-    id: 5,
+    id: 6,
     title: "Client Success Story: MegaFarm Ltd",
     description: "How our machines transformed their production process",
     thumbnail: crusherImage,

@@ -62,7 +62,7 @@ const Header = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <div className="relative h-10 w-32 flex items-center">
+          <div className="relative h-10 w-50 flex items-center">
             {/* Logo text */}
             <span className={`font-bold text-xl ${scrolled ? "text-green-600" : "text-white"}`}>
               {COMPANY_NAME}

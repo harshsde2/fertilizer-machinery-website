@@ -29,7 +29,7 @@ const testimonials = [
     id: 3,
     name: "Hitesh Sare",
     position: "Operations Director",
-    company: "Advance fertilizer",
+    company: "SSP plant and Granulator",
     image: "/testimonial3.svg",
     quote: "Outstanding customer support and machine reliability. We've been using their equipment for over 5 years with minimal maintenance.",
     rating: 5,

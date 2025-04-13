@@ -21,9 +21,9 @@ const videos = [
     title: "Steel plant furnish",
     description: "Steel plant furnish of our company",
     thumbnail: steelplantfurnishImage,
-    videoSrc: "/videos/steel_plant_furnish.mp4",
+    videoSrc: "/videos/ssp.mp4",
     category: "product",
-    duration: "2:45",
+    duration: "37.22",
   },
   {
     id: 1,
@@ -32,7 +32,7 @@ const videos = [
     thumbnail: rotaryDrumImage,
     videoSrc: "/videos/SSP_plant.mp4",
     category: "product",
-    duration: "2:45",
+    duration: "3:02",
   },
   {
     id: 2,
